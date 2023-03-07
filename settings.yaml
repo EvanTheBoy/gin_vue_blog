@@ -1,0 +1,17 @@
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  db: gin_vue_blog_db
+  user: root
+  password: xhw200116long3
+  log_level: dev
+logger:  # 日志相关
+  level: info
+  prefix: '[gin_vue_blog]'
+  directory: log
+  show_line: true  # 是否显示行号
+  log_in_console: true
+system:
+  host: "0.0.0.0"
+  port: 8080
+  env: dev
