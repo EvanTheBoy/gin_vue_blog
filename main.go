@@ -8,5 +8,6 @@ import (
 
 func main() {
 	core.InitCore()
-	fmt.Println(global.Config)
+	global.DB = core.InitGorm()
+	fmt.Println(global.DB)
 }
