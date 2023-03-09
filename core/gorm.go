@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// InitGorm 数据库mysql的连接
 func InitGorm() *gorm.DB {
 	if global.Config.Mysql.Host == "" {
 		log.Println("未配置mysql, 取消gorm连接")
@@ -29,8 +30,8 @@ func InitGorm() *gorm.DB {
 		log.Fatalf(fmt.Sprintf("[%s]mysql连接失败", dsn))
 	}
 	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxLifetime(time.Hour * 4)
+	sqlDB.SetMaxIdleConns(10)               // 最大空闲连接数
+	sqlDB.SetMaxOpenConns(100)              // 最多可容纳
+	sqlDB.SetConnMaxLifetime(time.Hour * 4) // 连接最大复用时间，不能超过mysql的wait_timeout
 	return db
 }
