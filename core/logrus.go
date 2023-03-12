@@ -78,14 +78,15 @@ func InitDefaultLogger() {
 }
 
 func InitLogger() *logrus.Logger {
-	mLog := logrus.New()                                        //新建一个实例
-	mLog.SetOutput(os.Stdout)                                   //设置输出类型
-	mLog.SetFormatter(&LogFormatter{})                          //开启返回函数名和行号
-	level, err := logrus.ParseLevel(global.Config.Logger.Level) //设置自己定义的Formatter
+	mLog := logrus.New()                                //新建一个实例
+	mLog.SetOutput(os.Stdout)                           //设置输出类型
+	mLog.SetReportCaller(global.Config.Logger.ShowLine) //开启返回函数名和行号
+	mLog.SetFormatter(&LogFormatter{})                  //设置自己定义的Formatter
+	level, err := logrus.ParseLevel(global.Config.Logger.Level)
 	if err != nil {
 		level = logrus.InfoLevel
 	}
-	mLog.SetLevel(level)
+	mLog.SetLevel(level) //设置最低的Level
 	InitDefaultLogger()
 	return mLog
 }
