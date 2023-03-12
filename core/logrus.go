@@ -1,5 +1,9 @@
 package core
 
+//这个是用来记录程序的运行情况的。日志是一种记录程序中发生的事件或数据的方式，
+//可以帮助开发者或用户分析程序的性能、错误、状态等。
+//logrus是一种日志库，就是一组提供日志功能的代码，可以方便地在Go语言中使用。
+
 import (
 	"bytes"
 	"fmt"
@@ -62,7 +66,7 @@ func (t *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 }
 
 func InitDefaultLogger() {
-	//全局logrus
+	//这里设置的是全局logrus
 	logrus.SetOutput(os.Stdout)
 	logrus.SetReportCaller(global.Config.Logger.ShowLine)
 	logrus.SetFormatter(&LogFormatter{})
