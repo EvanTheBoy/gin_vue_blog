@@ -67,9 +67,9 @@ func (t *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 
 func InitDefaultLogger() {
 	//这里设置的是全局logrus
-	logrus.SetOutput(os.Stdout)
-	logrus.SetReportCaller(global.Config.Logger.ShowLine)
-	logrus.SetFormatter(&LogFormatter{})
+	logrus.SetOutput(os.Stdout)                           //设置输出类型
+	logrus.SetReportCaller(global.Config.Logger.ShowLine) //开启返回函数名和行号
+	logrus.SetFormatter(&LogFormatter{})                  //设置自己定义的Formatter
 	level, err := logrus.ParseLevel(global.Config.Logger.Level)
 	if err != nil {
 		level = logrus.InfoLevel
