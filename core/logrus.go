@@ -36,7 +36,7 @@ func (t *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	default:
 		levelColor = blue
 	}
-	var b *bytes.Buffer
+	var b *bytes.Buffer //设置一个缓冲区。我们规定通过这个函数返回出去的都要放在缓冲区里
 	if entry.Buffer != nil {
 		b = entry.Buffer
 	} else {
@@ -49,7 +49,10 @@ func (t *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	if entry.HasCaller() {
 		//自定义文件路径
 		funcVal := entry.Caller.Function
+		//Sprintf()函数的作用是返回一个字符串
 		fileVal := fmt.Sprintf("%s:%d", path.Base(entry.Caller.File), entry.Caller.Line)
+		//设置格式。Fprintf()函数会将输出写入到一个io.Writer接口类型的变量中
+		//这个Fprintf()函数的第一个变量就是io.Writer接口类型的变量，最后这个函数返回出去的也是这个的.Bytes
 		_, err := fmt.Fprintf(b, "%s[%s] \x1b[%dm[%s]\x1b[0m %s %s %s\n",
 			log.Prefix, timestamp, levelColor, entry.Level, fileVal, funcVal, entry.Message)
 		if err != nil {
@@ -67,7 +70,7 @@ func (t *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 
 func InitDefaultLogger() {
 	//这里设置的是全局logrus
-	logrus.SetOutput(os.Stdout)                           //设置输出类型
+	logrus.SetOutput(os.Stdout)                           //设置输出类型。这个Stdout就是说把日志内容输出到控制台
 	logrus.SetReportCaller(global.Config.Logger.ShowLine) //开启返回函数名和行号
 	logrus.SetFormatter(&LogFormatter{})                  //设置自己定义的Formatter
 	level, err := logrus.ParseLevel(global.Config.Logger.Level)
